@@ -1,5 +1,4 @@
 import { ArtistInsights_artist } from "__generated__/ArtistInsights_artist.graphql"
-import { ArtistInsights_priceInsights } from "__generated__/ArtistInsights_priceInsights.graphql"
 import { AnimatedArtworkFilterButton, FilterModalMode, FilterModalNavigator } from "lib/Components/FilterModal"
 import { StickyTabPageScrollView } from "lib/Components/StickyTabPage/StickyTabPageScrollView"
 import { ArtworkFilterGlobalStateProvider } from "lib/utils/ArtworkFilter/ArtworkFiltersStore"
@@ -10,11 +9,10 @@ import { NativeScrollEvent, NativeSyntheticEvent } from "react-native"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ReactElement } from "simple-markdown"
 import { ArtistInsightsAuctionResultsPaginationContainer } from "./ArtistInsightsAuctionResults"
-import { MarketStatsFragmentContainer } from "./MarketStats"
+import { MarketStatsQueryRenderer } from "./MarketStats"
 
 interface ArtistInsightsProps {
   artist: ArtistInsights_artist
-  priceInsights: ArtistInsights_priceInsights
 }
 
 export interface ViewableItems {
@@ -30,7 +28,7 @@ interface ViewToken {
 }
 
 const FILTER_BUTTON_OFFSET = 100
-export const ArtistInsights: React.FC<ArtistInsightsProps> = ({ artist, priceInsights }) => {
+export const ArtistInsights: React.FC<ArtistInsightsProps> = ({ artist }) => {
   const [isFilterButtonVisible, setIsFilterButtonVisible] = useState(false)
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false)
 
@@ -55,7 +53,7 @@ export const ArtistInsights: React.FC<ArtistInsightsProps> = ({ artist, priceIns
     <ArtworkFilterGlobalStateProvider>
       <StickyTabPageScrollView contentContainerStyle={{ paddingTop: 20 }} onScrollEndDrag={onScrollEndDrag}>
         <Join separator={<Separator my={2} ml={-2} width={useScreenDimensions().width} />}>
-          <MarketStatsFragmentContainer priceInsights={priceInsights} />
+          <MarketStatsQueryRenderer artistInternalID={artist.internalID} />
           <ArtistInsightsAuctionResultsPaginationContainer artist={artist} />
           <FilterModalNavigator
             isFilterArtworksModalVisible={isFilterModalVisible}
@@ -83,6 +81,7 @@ export const ArtistInsightsFragmentContainer = createFragmentContainer(ArtistIns
     fragment ArtistInsights_artist on Artist {
       name
       id
+      internalID
       slug
       ...ArtistInsightsAuctionResults_artist
     }

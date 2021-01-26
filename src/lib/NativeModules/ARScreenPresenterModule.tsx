@@ -12,8 +12,12 @@ export const __unsafe_tabStackNavRefs: Record<BottomTabType, NavigationContainer
   profile: null,
 }
 
+// tslint:disable-next-line:variable-name
+export const __unsafe_modalStackRef = { current: null as NavigationContainerRef | null }
+
 export const ARScreenPresenterModule: typeof NativeModules["ARScreenPresenterModule"] = {
-  presentModal(_viewDescriptor: ViewDescriptor) {
+  presentModal(viewDescriptor: ViewDescriptor) {
+    __unsafe_modalStackRef.current?.dispatch(StackActions.push(viewDescriptor.moduleName, viewDescriptor.props))
     // _presentModal(viewDescriptor)
   },
   async popToRootAndScrollToTop(selectedTab: BottomTabType) {

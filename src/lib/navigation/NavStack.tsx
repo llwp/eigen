@@ -10,7 +10,7 @@ const StackNavigator = createStackNavigator()
 export const NavStack = React.forwardRef<NavigationContainerRef, { rootModuleName: AppModule }>(
   ({ rootModuleName }, ref) => {
     return (
-      <NavigationContainer ref={ref}>
+      <NavigationContainer ref={ref} independent>
         <StackNavigator.Navigator
           screenOptions={{ headerShown: false, cardStyle: { backgroundColor: "white" } }}
           initialRouteName={rootModuleName}

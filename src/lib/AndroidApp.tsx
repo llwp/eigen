@@ -6,6 +6,7 @@ import { View } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import track from "react-tracking"
 import { LogIn } from "./LogIn/LogIn"
+import { HolisticNav } from "./navigation/HolisticNav"
 import { BottomTabsNavigator } from "./Scenes/BottomTabs/BottomTabsNavigator"
 import { ProvideScreenDimensions } from "./utils/useScreenDimensions"
 
